@@ -70,12 +70,21 @@ class Rook(piece):
         else: return False
         
 
-    
 class Knight(piece):
     def __init__(self, color):
         super().__init__(color)
         self.name = "Knight"
 
+    def move(self,beg,end,board):
+        if(abs(beg[0]-end[0])==1 and abs(beg[1]-end[1])==2): return True
+        elif(abs(beg[0]-end[0])==2 and abs(beg[1]-end[1])==1): return True
+        else:return False
+
+    def take(self,beg,end,piece,board):
+        if(self.move(beg,end,board)): #Check if the piece can move throught the board
+            if(piece.get_color() == self.get_color()): return False
+            else: return True
+        else:return False        
 class Bishop(piece):
     def __init__(self, color):
         super().__init__(color)
