@@ -111,12 +111,31 @@ class Bishop(piece):
             else: return True
         else: return False
 
-class Queen(piece):
+class Queen(Rook,Bishop):
     def __init__(self, color):
         super().__init__(color)
         self.name = "Queen"
+
+    def move(self,beg,end,board):
+        difRow=end[1]-beg[1] #The amount of squares is moving vertically
+        difCol =end[0]-beg[0] #The amount of squares is moving horizontaly
+        if (difRow == 0 or difCol == 0): return Rook.move(self,beg,end,board)
+        else: return Bishop.move(self,beg,end,board)
+
 
 class King(piece):
     def __init__(self, color):
         super().__init__(color)
         self.name = "King"
+
+    def move(self,beg,end,board):
+        difRow=abs(end[1]-beg[1]) #The amount of squares is moving vertically
+        difCol =abs(end[0]-beg[0]) #The amount of squares is moving horizontaly
+        if (difRow > 1 or difCol>1): return False
+        else: return True
+
+    def take(self,beg,end,piece,board):
+        if (self.move(beg,end,board)):
+            if(piece.get_color() == self.get_color()): return False
+            else: return True
+        else: return False
